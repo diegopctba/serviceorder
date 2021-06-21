@@ -1,6 +1,8 @@
 package org.diego.api.serviceorder.service;
 
-import org.diego.api.serviceorder.dao.ClienteDao;
+import java.util.List;
+
+import org.diego.api.serviceorder.dao.cliente.ClienteDao;
 import org.diego.api.serviceorder.dto.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,9 @@ public class ClienteService {
 	 */
 	public void saveCliente(Cliente cliente) {
 		clienteDao.save(cliente);
+	}
+
+	public List<Cliente> listaClienteNome(String nome) {
+		return clienteDao.findClienteByNome(nome);
 	}
 }

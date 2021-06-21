@@ -24,7 +24,6 @@ public class EquipamentoService {
 	}
 
 	public List<Equipamento> getPorCliente(Integer id) {
-		System.out.println("Pesquisando equipamento pelo cliente " + id);
 		return dao.findAllByCliente(id);
 		// return dao.findByCliente(id);
 	}
