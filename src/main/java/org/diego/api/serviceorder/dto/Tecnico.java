@@ -13,16 +13,8 @@ import javax.persistence.Table;
 public class Tecnico {
 
 	@Id
-	private int id;
+	private int matricula;
 	private String nome;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getNome() {
 		return nome;
@@ -30,6 +22,14 @@ public class Tecnico {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public int getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(int matricula) {
+		this.matricula = matricula;
 	}
 
 }

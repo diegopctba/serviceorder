@@ -32,6 +32,12 @@ public class ClienteService {
 		clienteDao.save(cliente);
 	}
 
+	/**
+	 * Lista Clientes por nome completo
+	 * 
+	 * @param nome
+	 * @return {@link Cliente}
+	 */
 	public List<Cliente> listaClienteNome(String nome) {
 		return clienteDao.findClienteByNome(nome);
 	}
