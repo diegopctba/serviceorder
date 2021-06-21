@@ -26,6 +26,7 @@ public class ClienteController {
 	 */
 	@GetMapping("/cliente/{id}")
 	private Cliente getClienteById(@PathVariable("id") Integer id) {
+		System.out.println("cliente " + id);
 		return clienteService.getCliente(id);
 	}
 

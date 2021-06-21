@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "DATA", name = "TECNICO")
+@Table(name = "TECNICO")
 /**
  * Tecnico
  *

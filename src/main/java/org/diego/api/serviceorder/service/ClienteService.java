@@ -29,7 +29,7 @@ public class ClienteService {
 	 * @param cliente
 	 */
 	public void saveCliente(Cliente cliente) {
-		clienteDao.save(cliente);
+		clienteDao.saveAndFlush(cliente);
 	}
 
 	/**
