@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class ClienteService {
 
 	@Autowired
-	ClienteDao clienteDao;
+	private ClienteDao clienteDao;
 
 	/**
 	 * Recupera cliente pelo id

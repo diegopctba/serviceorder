@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClienteController {
 
 	@Autowired
-	ClienteService clienteService;
+	private ClienteService clienteService;
 
 	/**
 	 * Obtem dados do cliente pelo ID

@@ -17,7 +17,7 @@ public class Evento {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "evento_seq")
 	@SequenceGenerator(name = "evento_seq", sequenceName = "SEQ_EVENTO", allocationSize = 1)
 	private int id;
-	private int servico_id;
+	private long servico_id;
 	private Date data;
 	private String descricao;
 	private String detalhes;
@@ -30,11 +30,11 @@ public class Evento {
 		this.id = id;
 	}
 
-	public int getServico_id() {
+	public long getServico_id() {
 		return servico_id;
 	}
 
-	public void setServico_id(int servico_id) {
+	public void setServico_id(long servico_id) {
 		this.servico_id = servico_id;
 	}
 

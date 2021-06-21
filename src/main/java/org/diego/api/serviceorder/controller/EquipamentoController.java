@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EquipamentoController {
 
 	@Autowired
-	EquipamentoService service;
+	private EquipamentoService service;
 
 	@GetMapping("/equipamento/{id}")
 	private Equipamento getEquipamentoId(@PathVariable("id") Integer id) {
