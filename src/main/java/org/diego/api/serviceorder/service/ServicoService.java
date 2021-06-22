@@ -1,6 +1,7 @@
 package org.diego.api.serviceorder.service;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.diego.api.serviceorder.dao.evento.EventoDao;
 import org.diego.api.serviceorder.dao.servico.ServicoDao;
@@ -54,5 +55,9 @@ public class ServicoService {
 	 */
 	public Servico recuperaServicoId(long id) {
 		return servicoDao.findById(id).get();
+	}
+
+	public List<Servico> recuperarServicosPendentesTecnico(int id) {
+		return servicoDao.findAllByPendenteTecnico(id);
 	}
 }

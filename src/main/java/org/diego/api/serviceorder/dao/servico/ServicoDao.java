@@ -1,5 +1,7 @@
 package org.diego.api.serviceorder.dao.servico;
 
+import java.util.List;
+
 import org.diego.api.serviceorder.dto.Servico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,5 +15,8 @@ public interface ServicoDao extends JpaRepository<Servico, Long> {
 	@Transactional
 	@Query("UPDATE Servico s SET s.status = :status WHERE s.id = :id")
 	public void updateServicoForId(@Param("status") char status, @Param("id") long id);
+
+	@Query("SELECT s FROM Servico s WHERE s.status = 'P' AND s.tecnico.id = :id")
+	public List<Servico> findAllByPendenteTecnico(int id);
 
 }
