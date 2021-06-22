@@ -44,7 +44,13 @@ public class ServicoService {
 	 * @param {@link Servico}
 	 */
 	public void atualizaServico(Servico servico) {
-		servicoDao.updateServicoForId(servico.getStatus(), servico.getId());
+		servicoDao.updateServicoForId(servico.getStatus(), servico.getTecnico().getMatricula(), servico.getId());
+		Evento evento = new Evento();
+		evento.setServico_id(servico.getId());
+		evento.setData(new Date(System.currentTimeMillis()));
+		evento.setDescricao("Atualizacao ");
+		evento.setDetalhes("Mudanca de status " + servico.getStatus());
+		eventoDao.save(evento);
 	}
 
 	/**

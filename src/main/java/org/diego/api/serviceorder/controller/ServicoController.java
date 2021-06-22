@@ -44,7 +44,6 @@ public class ServicoController {
 	 */
 	@PutMapping("/servico")
 	private void atualizarServico(@RequestBody Servico servico) {
-		System.out.println("atualizando servico");
 		servicos.atualizaServico(servico);
 	}
 

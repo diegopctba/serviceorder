@@ -213,7 +213,7 @@
 					"response": []
 				},
 				{
-					"name": "Busca servico 1",
+					"name": "Busca Servico ID 1",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -233,13 +233,63 @@
 					"response": []
 				},
 				{
-					"name": "Atualizar Servico",
+					"name": "Busca Pendentes por Tecnico",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/servicos/pendentes/tecnico/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"servicos",
+								"pendentes",
+								"tecnico",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Inicio do atendimento",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"P\"\r\n}",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"P\",\r\n    \"tecnico\": {\r\n        \"matricula\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/servico",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"servico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Finalizacao do atendimento Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"F\",\r\n    \"tecnico\": {\r\n        \"matricula\": 1\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
