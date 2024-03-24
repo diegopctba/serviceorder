@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface EventoDao extends JpaRepository<Evento, Integer> {
 
-	@Query("SELECT e FROM Evento e WHERE e.servico_id = ?1")
+	@Query("SELECT e FROM Evento e WHERE e.servicoId = ?1")
 	List<Evento> findEventoByServico(long id);
 
 }
