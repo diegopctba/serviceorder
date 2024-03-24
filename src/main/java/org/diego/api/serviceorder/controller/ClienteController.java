@@ -19,7 +19,7 @@ public class ClienteController extends BasicController {
 	@GetMapping("/cliente/{clienteId}")
 	private ResponseEntity<Object> getClienteById(@PathVariable("clienteId") Integer clienteId) {
 		Optional<Cliente> cliente = clienteService.getCliente(clienteId);
-		return cliente.isEmpty() ? responseStatus(HttpStatus.NO_CONTENT, null) : responseSucess(cliente.get());
+		return cliente.isEmpty() ? responseNoContent() : responseSucess(cliente.get());
 	}
 
 	@PostMapping("/cliente")
