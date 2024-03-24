@@ -11,27 +11,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class ClienteController {
+public class ClienteController extends BasicController {
 
 	@Autowired
 	private ClienteService clienteService;
 
 	@GetMapping("/cliente/{clienteId}")
-	private ResponseEntity<Cliente> getClienteById(@PathVariable("clienteId") Integer clienteId) {
+	private ResponseEntity<Object> getClienteById(@PathVariable("clienteId") Integer clienteId) {
 		Optional<Cliente> cliente = clienteService.getCliente(clienteId);
-		if (!cliente.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(cliente.get());
+		return cliente.isEmpty() ? responseStatus(HttpStatus.NO_CONTENT, null) : responseSucess(cliente.get());
 	}
 
 	@PostMapping("/cliente")
 	private ResponseEntity<Object> salvarCliente(@RequestBody Cliente cliente) {
 		cliente = clienteService.saveCliente(cliente);
-		if (cliente == null) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Cliente já cadastrado");
-		}
-		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(cliente);
+		return cliente == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente já cadastrado") : responseSucess(cliente);
 	}
 
 	@GetMapping("/cliente")
