@@ -32,7 +32,7 @@ public class ServicoService {
 			evento.setData(new Date(System.currentTimeMillis()));
 			evento.setDescricao("ABERTURA DE SERVICO");
 			evento.setDetalhes(servico.getDefeito());
-			evento.setServico_id(id);
+			evento.setServicoId(id);
 			eventoDao.save(evento);
 		}
 		return id;
@@ -46,7 +46,7 @@ public class ServicoService {
 	public void atualizaServico(Servico servico) {
 		servicoDao.updateServicoForId(servico.getStatus(), servico.getTecnico().getMatricula(), servico.getId());
 		Evento evento = new Evento();
-		evento.setServico_id(servico.getId());
+		evento.setServicoId(servico.getId());
 		evento.setData(new Date(System.currentTimeMillis()));
 		evento.setDescricao("Atualizacao ");
 		evento.setDetalhes("Mudanca de status " + servico.getStatus());

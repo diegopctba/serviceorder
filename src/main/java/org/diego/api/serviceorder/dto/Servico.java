@@ -1,5 +1,8 @@
 package org.diego.api.serviceorder.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -12,6 +15,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SERVICO")
+@Setter
+@Getter
 public class Servico {
 
 	@Id
@@ -28,69 +33,5 @@ public class Servico {
 	private Date entrada;
 	private Date entrega;
 	private char status;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getDefeito() {
-		return defeito;
-	}
-
-	public void setDefeito(String defeito) {
-		this.defeito = defeito;
-	}
-
-	public Date getEntrada() {
-		return entrada;
-	}
-
-	public void setEntrada(Date entrada) {
-		this.entrada = entrada;
-	}
-
-	public Date getEntrega() {
-		return entrega;
-	}
-
-	public void setEntrega(Date entrega) {
-		this.entrega = entrega;
-	}
-
-	public char getStatus() {
-		return status;
-	}
-
-	public void setStatus(char status) {
-		this.status = status;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Equipamento getEquipamento() {
-		return equipamento;
-	}
-
-	public void setEquipamento(Equipamento equipamento) {
-		this.equipamento = equipamento;
-	}
-
-	public Tecnico getTecnico() {
-		return tecnico;
-	}
-
-	public void setTecnico(Tecnico tecnico) {
-		this.tecnico = tecnico;
-	}
 
 }

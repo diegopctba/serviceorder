@@ -78,7 +78,7 @@ public class ServicoController {
 	@PutMapping("/servico/evento/{id}")
 	private void adicionarEvento(@PathVariable long id, @RequestBody Evento evento) {
 		if (evento != null) {
-			evento.setServico_id(id);
+			evento.setServicoId(id);
 			evento.setData(new Date(System.currentTimeMillis()));
 			eventos.salvarEvento(evento);
 		}
