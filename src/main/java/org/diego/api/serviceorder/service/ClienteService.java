@@ -1,6 +1,7 @@
 package org.diego.api.serviceorder.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.diego.api.serviceorder.dao.cliente.ClienteDao;
 import org.diego.api.serviceorder.dto.Cliente;
@@ -13,31 +14,22 @@ public class ClienteService {
 	@Autowired
 	private ClienteDao clienteDao;
 
-	/**
-	 * Recupera cliente pelo id
-	 * 
-	 * @param id
-	 * @return {@link Cliente}
-	 */
-	public Cliente getCliente(int id) {
-		return clienteDao.findById(id).get();
+	public Optional<Cliente> getCliente(int id) {
+		return clienteDao.findById(id);
 	}
 
-	/**
-	 * Salva Cliente Novo
-	 * 
-	 * @param cliente
-	 */
-	public void saveCliente(Cliente cliente) {
-		clienteDao.saveAndFlush(cliente);
+	public Cliente saveCliente(Cliente cliente) {
+		if (existeCliente(cliente.getNome(), cliente.getNumDocumento())) {
+			return null;
+		}
+		return clienteDao.saveAndFlush(cliente);
 	}
 
-	/**
-	 * Lista Clientes por nome completo
-	 * 
-	 * @param nome
-	 * @return {@link Cliente}
-	 */
+	private boolean existeCliente(String nome, Long numDocumento) {
+		List<Cliente> clientes = clienteDao.findByNomeOrDocumento(nome, numDocumento);
+		return (clientes != null && !clientes.isEmpty());
+	}
+
 	public List<Cliente> listaClienteNome(String nome) {
 		return clienteDao.findClienteByNome(nome);
 	}

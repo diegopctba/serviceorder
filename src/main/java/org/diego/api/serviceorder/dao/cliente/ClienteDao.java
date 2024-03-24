@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface ClienteDao extends JpaRepository<Cliente, Integer> {
 
 	@Query("SELECT c FROM Cliente c WHERE c.nome = ?1")
-	public List<Cliente> findClienteByNome(String nome);
+	List<Cliente> findClienteByNome(String nome);
 
+	@Query("SELECT c FROM Cliente c WHERE c.nome = ?1 AND c.numDocumento = ?2")
+	List<Cliente> findByNomeOrDocumento(String nome, Long numDocumento);
 }
