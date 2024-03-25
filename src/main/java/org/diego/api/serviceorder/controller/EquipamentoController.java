@@ -6,10 +6,9 @@ import java.util.Optional;
 import org.diego.api.serviceorder.dto.Equipamento;
 import org.diego.api.serviceorder.service.EquipamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class EquipamentoController extends BasicController {
@@ -23,10 +22,18 @@ public class EquipamentoController extends BasicController {
 		return equipamento.isEmpty() ? responseNoContent() : responseSucess(equipamento.get());
 	}
 
-	@GetMapping("/equipamento/cliente/{id}")
-	private ResponseEntity<List<?>> getEquipamentoCliente(@PathVariable("id") Integer id) {
-		List<Equipamento> equipamentos = equipamentoService.getPorCliente(id);
+	@GetMapping("/equipamento/cliente/{clienteId}")
+	private ResponseEntity<List<?>> getEquipamentoCliente(@PathVariable("clienteId") Integer clienteId) {
+		List<Equipamento> equipamentos = equipamentoService.getPorCliente(clienteId);
 		return (equipamentos != null && equipamentos.isEmpty())
 				? responseListNoContent() : responseListSucess(equipamentos);
 	}
+
+	@PostMapping("/equipamento")
+	private ResponseEntity<Object> salvarEquipamento(@RequestBody Equipamento equipamento) {
+		equipamento = equipamentoService.saveEquipamento(equipamento);
+		return equipamento == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Equipamento já cadastrado") : responseSucess(equipamento);
+	}
+
+
 }

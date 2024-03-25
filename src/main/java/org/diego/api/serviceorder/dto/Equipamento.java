@@ -5,13 +5,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "EQUIPAMENTO")
@@ -27,7 +21,9 @@ public class Equipamento implements Serializable {
 	private int id;
 	@ManyToOne
 	private Cliente cliente;
+	@Column(nullable = false, unique = true)
 	private String serie;
+	@Column(nullable = false)
 	private String marca;
 	private String modelo;
 	private String descricao;

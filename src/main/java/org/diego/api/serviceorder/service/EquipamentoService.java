@@ -23,4 +23,15 @@ public class EquipamentoService {
 		return dao.findAllByCliente(id);
 	}
 
+	public Equipamento saveEquipamento(Equipamento equipamento) {
+		if (verificaEquipamento(equipamento)) {
+			return null;
+		}
+		return dao.saveAndFlush(equipamento);
+	}
+
+	private boolean verificaEquipamento(Equipamento equipamento) {
+		Equipamento equipamentoOptional = dao.findByClienteNumSerie(equipamento.getCliente().getId(), equipamento.getSerie());
+		return equipamentoOptional != null && equipamentoOptional.getId() > 0;
+	}
 }
