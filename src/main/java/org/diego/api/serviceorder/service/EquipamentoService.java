@@ -14,7 +14,6 @@ public class EquipamentoService {
 	@Autowired
 	private EquipamentoDao dao;
 
-
 	public Optional<Equipamento> getById(Integer id) {
 		return dao.findById(id);
 	}

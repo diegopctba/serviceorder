@@ -11,24 +11,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class ClienteController extends BasicController {
+public class ClienteController extends BasicController<Cliente> {
 
 	@Autowired
 	private ClienteService clienteService;
 
 	@GetMapping("/cliente/{clienteId}")
 	private ResponseEntity<Object> getClienteById(@PathVariable("clienteId") Integer clienteId) {
-		Optional<Cliente> cliente = clienteService.getCliente(clienteId);
-		return cliente.isEmpty() ? responseNoContent() : responseSucess(cliente.get());
+		return responseEntity(clienteService.getCliente(clienteId));
 	}
 
 	@PostMapping("/cliente")
 	private ResponseEntity<Object> salvarCliente(@RequestBody Cliente cliente) {
 		cliente = clienteService.saveCliente(cliente);
-		return cliente == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente já cadastrado") : responseSucess(cliente);
+		return cliente == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente já cadastrado") : responseSuccess(cliente);
 	}
 
-	@GetMapping("/cliente")
+	@GetMapping("/cliente/")
 	private List<Cliente> listaClienteNome(@RequestParam("nome") String nome) {
 		return clienteService.listaClienteNome(nome);
 	}
