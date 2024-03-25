@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.diego.api.serviceorder.dao.cliente.ClienteDao;
-import org.diego.api.serviceorder.dto.Cliente;
+import org.diego.api.serviceorder.model.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

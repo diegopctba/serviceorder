@@ -1,4 +1,4 @@
-package org.diego.api.serviceorder.dto;
+package org.diego.api.serviceorder.model;
 
 import lombok.Getter;
 import lombok.Setter;

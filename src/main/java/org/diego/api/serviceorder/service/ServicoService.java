@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.diego.api.serviceorder.dao.evento.EventoDao;
 import org.diego.api.serviceorder.dao.servico.ServicoDao;
-import org.diego.api.serviceorder.dto.Evento;
-import org.diego.api.serviceorder.dto.Servico;
+import org.diego.api.serviceorder.model.Evento;
+import org.diego.api.serviceorder.model.Servico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

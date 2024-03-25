@@ -2,7 +2,7 @@ package org.diego.api.serviceorder.dao.servico;
 
 import java.util.List;
 
-import org.diego.api.serviceorder.dto.Servico;
+import org.diego.api.serviceorder.model.Servico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

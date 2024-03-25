@@ -2,7 +2,7 @@ package org.diego.api.serviceorder.dao.evento;
 
 import java.util.List;
 
-import org.diego.api.serviceorder.dto.Evento;
+import org.diego.api.serviceorder.model.Evento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

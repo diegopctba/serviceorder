@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.IOException;
 
 import org.diego.api.serviceorder.ServiceOrderApplication;
-import org.diego.api.serviceorder.dto.Cliente;
+import org.diego.api.serviceorder.model.Cliente;
 import org.diego.api.serviceorder.service.ClienteService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

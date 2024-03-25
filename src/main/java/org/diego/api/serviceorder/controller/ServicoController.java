@@ -3,8 +3,8 @@ package org.diego.api.serviceorder.controller;
 import java.sql.Date;
 import java.util.List;
 
-import org.diego.api.serviceorder.dto.Evento;
-import org.diego.api.serviceorder.dto.Servico;
+import org.diego.api.serviceorder.model.Evento;
+import org.diego.api.serviceorder.model.Servico;
 import org.diego.api.serviceorder.service.EventoServico;
 import org.diego.api.serviceorder.service.ServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
