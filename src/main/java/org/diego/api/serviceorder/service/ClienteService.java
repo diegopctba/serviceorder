@@ -33,4 +33,14 @@ public class ClienteService {
 	public List<Cliente> listaClienteNome(String nome) {
 		return clienteDao.findClienteByNome(nome);
 	}
+
+	public Cliente atualizaCliente(Cliente cliente) {
+		Optional<Cliente> clienteCadastrado = clienteDao.findById(cliente.getId());
+		if (!clienteCadastrado.isPresent()) {
+			return null;
+		}
+		return clienteDao.saveAndFlush(cliente);
+
+	}
+
 }

@@ -3,11 +3,13 @@ package org.diego.api.serviceorder.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.sun.istack.NotNull;
 import org.diego.api.serviceorder.model.Cliente;
 import org.diego.api.serviceorder.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +32,12 @@ public class ClienteController extends BasicController<Cliente> {
 	@GetMapping("/cliente/")
 	private List<Cliente> listaClienteNome(@RequestParam("nome") String nome) {
 		return clienteService.listaClienteNome(nome);
+	}
+
+	@PutMapping("/cliente")
+	private ResponseEntity<Object> atualizaCliente(@RequestBody Cliente cliente) {
+		cliente = clienteService.atualizaCliente(cliente);
+		return cliente == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente não encontrado") : responseSuccess(cliente);
 	}
 
 }
