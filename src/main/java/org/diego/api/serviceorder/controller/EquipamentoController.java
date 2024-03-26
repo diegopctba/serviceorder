@@ -33,5 +33,10 @@ public class EquipamentoController extends BasicController<Equipamento> {
 		return equipamento == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Equipamento já cadastrado") : responseSuccess(equipamento);
 	}
 
+	@DeleteMapping("/equipamento/{equipamentoId}")
+	private ResponseEntity<Object> removeEquipamento(@PathVariable("equipamentoId") Integer equipamentoId) {
+		boolean equipamentoRemovido = equipamentoService.removeEquipamento(equipamentoId);
+		return equipamentoRemovido ? responseSuccess("Equipamento removido") : responseStatus(HttpStatus.NO_CONTENT, "Equipamento não encontrado");
+	}
 
 }

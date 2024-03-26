@@ -37,4 +37,13 @@ public class EquipamentoService {
 		return equipamentoOptional != null && equipamentoOptional.getId() > 0;
 	}
 
+	public boolean removeEquipamento(int equipamentoId) {
+		Optional<Equipamento> equipamento = getById(equipamentoId);
+		if (equipamento.isPresent()) {
+   			dao.deleteById(equipamentoId);
+			return true;
+		}
+		return false;
+	}
+
 }
