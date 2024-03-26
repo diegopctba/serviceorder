@@ -16,6 +16,9 @@ public class ClienteService {
 	@Autowired
 	private ClienteDao clienteDao;
 
+	@Autowired
+	private EquipamentoService equipamentoService;
+
 	public Optional<Cliente> getCliente(int id) {
 		return clienteDao.findById(id);
 	}
@@ -44,7 +47,16 @@ public class ClienteService {
 			return null;
 		}
 		return clienteDao.saveAndFlush(cliente);
-
 	}
 
+	@Transactional
+	public boolean removeCliente(Integer clienteId) {
+		Optional<Cliente> cliente = clienteDao.findById(clienteId);
+		if (cliente.isPresent()) {
+			equipamentoService.removeEquipamentoPorCliente(clienteId);
+			clienteDao.deleteById(clienteId);
+			return true;
+		}
+		return false;
+	}
 }

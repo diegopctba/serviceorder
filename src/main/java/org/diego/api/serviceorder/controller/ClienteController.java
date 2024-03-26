@@ -40,4 +40,10 @@ public class ClienteController extends BasicController<Cliente> {
 		return cliente == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente não encontrado") : responseSuccess(cliente);
 	}
 
+	@DeleteMapping("/cliente/{clienteId}")
+	private ResponseEntity<Object> removeCliente(@PathVariable("clienteId") Integer clienteId) {
+		boolean clienteRemovido = clienteService.removeCliente(clienteId);
+		return clienteRemovido ? responseSuccess("Cliente removido") : responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente não removido");
+	}
+
 }

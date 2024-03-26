@@ -2,6 +2,7 @@ package org.diego.api.serviceorder.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.diego.api.serviceorder.dao.equipamento.EquipamentoDao;
 import org.diego.api.serviceorder.model.Equipamento;
@@ -14,14 +15,14 @@ import javax.transaction.Transactional;
 public class EquipamentoService {
 
 	@Autowired
-	private EquipamentoDao dao;
+	private EquipamentoDao equipamentoDao;
 
 	public Optional<Equipamento> getById(Integer id) {
-		return dao.findById(id);
+		return equipamentoDao.findById(id);
 	}
 
 	public List<Equipamento> getPorCliente(Integer id) {
-		return dao.findAllByCliente(id);
+		return equipamentoDao.findAllByCliente(id);
 	}
 
 	@Transactional
@@ -29,21 +30,27 @@ public class EquipamentoService {
 		if (verificaEquipamento(equipamento)) {
 			return null;
 		}
-		return dao.saveAndFlush(equipamento);
+		return equipamentoDao.saveAndFlush(equipamento);
 	}
 
 	private boolean verificaEquipamento(Equipamento equipamento) {
-		Equipamento equipamentoOptional = dao.findByClienteNumSerie(equipamento.getCliente().getId(), equipamento.getSerie());
+		Equipamento equipamentoOptional = equipamentoDao.findByClienteNumSerie(equipamento.getCliente().getId(), equipamento.getSerie());
 		return equipamentoOptional != null && equipamentoOptional.getId() > 0;
 	}
 
 	public boolean removeEquipamento(int equipamentoId) {
 		Optional<Equipamento> equipamento = getById(equipamentoId);
 		if (equipamento.isPresent()) {
-   			dao.deleteById(equipamentoId);
+   			equipamentoDao.deleteById(equipamentoId);
 			return true;
 		}
 		return false;
 	}
 
+	public void removeEquipamentoPorCliente(Integer clienteId) {
+		List<Equipamento> equipamentosCliente = equipamentoDao.findAllByCliente(clienteId);
+		if (equipamentosCliente != null && !equipamentosCliente.isEmpty()) {
+			equipamentoDao.deleteAllById(equipamentosCliente.stream().map(Equipamento::getId).collect(Collectors.toList()));
+		}
+	}
 }
