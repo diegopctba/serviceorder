@@ -8,6 +8,8 @@ import org.diego.api.serviceorder.model.Equipamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class EquipamentoService {
 
@@ -22,6 +24,7 @@ public class EquipamentoService {
 		return dao.findAllByCliente(id);
 	}
 
+	@Transactional
 	public Equipamento saveEquipamento(Equipamento equipamento) {
 		if (verificaEquipamento(equipamento)) {
 			return null;
@@ -33,4 +36,5 @@ public class EquipamentoService {
 		Equipamento equipamentoOptional = dao.findByClienteNumSerie(equipamento.getCliente().getId(), equipamento.getSerie());
 		return equipamentoOptional != null && equipamentoOptional.getId() > 0;
 	}
+
 }

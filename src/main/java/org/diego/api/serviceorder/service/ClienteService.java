@@ -8,6 +8,8 @@ import org.diego.api.serviceorder.model.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class ClienteService {
 
@@ -18,6 +20,7 @@ public class ClienteService {
 		return clienteDao.findById(id);
 	}
 
+	@Transactional
 	public Cliente saveCliente(Cliente cliente) {
 		if (existeCliente(cliente.getNome(), cliente.getNumDocumento())) {
 			return null;
@@ -34,6 +37,7 @@ public class ClienteService {
 		return clienteDao.findClienteByNome(nome);
 	}
 
+	@Transactional
 	public Cliente atualizaCliente(Cliente cliente) {
 		Optional<Cliente> clienteCadastrado = clienteDao.findById(cliente.getId());
 		if (!clienteCadastrado.isPresent()) {
