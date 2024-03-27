@@ -26,22 +26,22 @@ public class ServicoService {
 
 	private EquipamentoService equipamentoService;
 
-	public Long criarServico(Servico servico) {
+	public Servico criarServico(Servico servico) {
 		Optional<Cliente> cliente = clienteService.getCliente(servico.getCliente().getId());
 		Optional<Equipamento> equipamento = equipamentoService.getById(servico.getEquipamento().getId());
 		if (!cliente.isPresent() || !equipamento.isPresent()) {
 			return null;
 		}
-		long id = servicoDao.save(servico).getId();
-		if (id > 0) {
+		servico = servicoDao.save(servico);
+		if (servico.getId() > 0) {
 			Evento evento = new Evento();
 			evento.setData(new Date(System.currentTimeMillis()));
 			evento.setDescricao("ABERTURA DE SERVICO");
 			evento.setDetalhes(servico.getDefeito());
-			evento.setServicoId(id);
+			evento.setServicoId(servico.getId());
 			eventoDao.save(evento);
 		}
-		return id;
+		return servico;
 	}
 
 	public void atualizaServico(Servico servico) {

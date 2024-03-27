@@ -19,14 +19,14 @@ public class ClienteController extends BasicController<Cliente> {
 	private ClienteService clienteService;
 
 	@GetMapping("/cliente/{clienteId}")
-	private ResponseEntity<Object> getClienteById(@PathVariable("clienteId") Integer clienteId) {
+	private ResponseEntity<Cliente> getClienteById(@PathVariable("clienteId") Integer clienteId) {
 		return responseEntity(clienteService.getCliente(clienteId));
 	}
 
 	@PostMapping("/cliente")
-	private ResponseEntity<Object> salvarCliente(@RequestBody Cliente cliente) {
+	private ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente) {
 		cliente = clienteService.saveCliente(cliente);
-		return cliente == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente já cadastrado") : responseSuccess(cliente);
+		return cliente == null ? responseStatus(HttpStatus.FAILED_DEPENDENCY, null) : responseSuccess(cliente);
 	}
 
 	@GetMapping("/cliente/")
@@ -35,15 +35,15 @@ public class ClienteController extends BasicController<Cliente> {
 	}
 
 	@PutMapping("/cliente")
-	private ResponseEntity<Object> atualizaCliente(@RequestBody Cliente cliente) {
+	private ResponseEntity<Cliente> atualizaCliente(@RequestBody Cliente cliente) {
 		cliente = clienteService.atualizaCliente(cliente);
-		return cliente == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente não encontrado") : responseSuccess(cliente);
+		return cliente == null ? responseStatus(HttpStatus.UNPROCESSABLE_ENTITY, null) : responseSuccess(cliente);
 	}
 
 	@DeleteMapping("/cliente/{clienteId}")
-	private ResponseEntity<Object> removeCliente(@PathVariable("clienteId") Integer clienteId) {
+	private ResponseEntity<Cliente> removeCliente(@PathVariable("clienteId") Integer clienteId) {
 		boolean clienteRemovido = clienteService.removeCliente(clienteId);
-		return clienteRemovido ? responseSuccess("Cliente removido") : responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente não removido");
+		return clienteRemovido ? responseSuccess(null) : responseStatus(HttpStatus.UNPROCESSABLE_ENTITY, null);
 	}
 
 }

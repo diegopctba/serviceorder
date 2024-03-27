@@ -27,9 +27,9 @@ public class ServicoController extends BasicController<Servico> {
 	private EventoServico eventos;
 
 	@PostMapping("/servico")
-	private ResponseEntity<Object> criarServico(@RequestBody Servico servico) {
-		Long servicoId = servicos.criarServico(servico);
-		return servicoId == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Cliente ou equipamento não cadastrado") : responseSuccess(servicoId);
+	private ResponseEntity<Servico> criarServico(@RequestBody Servico servico) {
+		Servico servicoId = servicos.criarServico(servico);
+		return servicoId == null ? responseStatus(HttpStatus.FAILED_DEPENDENCY, null) : responseSuccess(servicoId);
 	}
 
 	@PutMapping("/servico")

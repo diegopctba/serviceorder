@@ -16,7 +16,7 @@ public class EquipamentoController extends BasicController<Equipamento> {
 	private EquipamentoService equipamentoService;
 
 	@GetMapping("/equipamento/{id}")
-	private ResponseEntity<Object> getEquipamentoId(@PathVariable("id") Integer id) {
+	private ResponseEntity<Equipamento> getEquipamentoId(@PathVariable("id") Integer id) {
 		return responseEntity(equipamentoService.getById(id));
 	}
 
@@ -28,15 +28,15 @@ public class EquipamentoController extends BasicController<Equipamento> {
 	}
 
 	@PostMapping("/equipamento")
-	private ResponseEntity<Object> salvarEquipamento(@RequestBody Equipamento equipamento) {
+	private ResponseEntity<Equipamento> salvarEquipamento(@RequestBody Equipamento equipamento) {
 		equipamento = equipamentoService.saveEquipamento(equipamento);
-		return equipamento == null ? responseStatus(HttpStatus.NOT_ACCEPTABLE, "Equipamento já cadastrado") : responseSuccess(equipamento);
+		return equipamento == null ? responseStatus(HttpStatus.UNPROCESSABLE_ENTITY, null) : responseSuccess(equipamento);
 	}
 
 	@DeleteMapping("/equipamento/{equipamentoId}")
-	private ResponseEntity<Object> removeEquipamento(@PathVariable("equipamentoId") Integer equipamentoId) {
+	private ResponseEntity<Equipamento> removeEquipamento(@PathVariable("equipamentoId") Integer equipamentoId) {
 		boolean equipamentoRemovido = equipamentoService.removeEquipamento(equipamentoId);
-		return equipamentoRemovido ? responseSuccess("Equipamento removido") : responseStatus(HttpStatus.NO_CONTENT, "Equipamento não encontrado");
+		return equipamentoRemovido ? responseSuccess(null) : responseStatus(HttpStatus.UNPROCESSABLE_ENTITY, null);
 	}
 
 }

@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public class BasicController<T> {
 
-    protected ResponseEntity<Object> responseStatus(HttpStatus httpStatus, Object body) {
+    protected ResponseEntity<T> responseStatus(HttpStatus httpStatus, T body) {
         return ResponseEntity.status(httpStatus).body(body);
     }
 
-    protected ResponseEntity<Object> responseSuccess(Object body) {
+    protected ResponseEntity<T> responseSuccess(T body) {
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
@@ -21,7 +21,7 @@ public class BasicController<T> {
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
-    protected ResponseEntity<Object> responseNoContent() {
+    protected ResponseEntity<T> responseNoContent() {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
@@ -29,7 +29,7 @@ public class BasicController<T> {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-    public  ResponseEntity<Object> responseEntity(@NotNull Optional<T> optional) {
+    public  ResponseEntity<T> responseEntity(@NotNull Optional<T> optional) {
         return optional.isPresent() ? responseSuccess(optional.get()) : responseNoContent();
     }
 }

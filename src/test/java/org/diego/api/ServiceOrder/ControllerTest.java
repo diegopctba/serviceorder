@@ -53,7 +53,7 @@ public class ControllerTest {
 	@Test
 	public void testAtualizaClienteNaoCadastrado() throws Exception {
 		mockMvc.perform(put("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(montaCliente())))
-				.andExpect(status().isNotAcceptable()).andDo(print());
+				.andExpect(status().isUnprocessableEntity()).andDo(print());
 	}
 
 	private Cliente montaCliente() {
