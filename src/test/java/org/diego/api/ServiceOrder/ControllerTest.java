@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import org.diego.api.serviceorder.ServiceOrderApplication;
 import org.diego.api.serviceorder.model.Cliente;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
