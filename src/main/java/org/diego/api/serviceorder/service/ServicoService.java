@@ -2,11 +2,14 @@ package org.diego.api.serviceorder.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.diego.api.serviceorder.dao.evento.EventoDao;
 import org.diego.api.serviceorder.dao.servico.ServicoDao;
-import org.diego.api.serviceorder.dto.Evento;
-import org.diego.api.serviceorder.dto.Servico;
+import org.diego.api.serviceorder.model.Cliente;
+import org.diego.api.serviceorder.model.Equipamento;
+import org.diego.api.serviceorder.model.Evento;
+import org.diego.api.serviceorder.model.Servico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,51 +22,42 @@ public class ServicoService {
 	@Autowired
 	private EventoDao eventoDao;
 
-	/**
-	 * Cria um serviço novo
-	 * 
-	 * @param {@link Servico}
-	 * @return id
-	 */
-	public long criarServico(Servico servico) {
-		long id = servicoDao.save(servico).getId();
-		if (id > 0) {
+	@Autowired
+	private ClienteService clienteService;
+
+	@Autowired
+	private EquipamentoService equipamentoService;
+
+	public Servico criarServico(Servico servico) {
+		Optional<Cliente> cliente = clienteService.getCliente(servico.getCliente().getId());
+		Optional<Equipamento> equipamento = equipamentoService.getById(servico.getEquipamento().getId());
+		if (!cliente.isPresent() || !equipamento.isPresent()) {
+			return null;
+		}
+		servico = servicoDao.save(servico);
+		if (servico.getId() > 0) {
 			Evento evento = new Evento();
 			evento.setData(new Date(System.currentTimeMillis()));
 			evento.setDescricao("ABERTURA DE SERVICO");
 			evento.setDetalhes(servico.getDefeito());
-			evento.setServico_id(id);
+			evento.setServicoId(servico.getId());
 			eventoDao.save(evento);
 		}
-		return id;
+		return servico;
 	}
 
-	/**
-	 * Atualiza status do servico
-	 * 
-	 * @param {@link Servico}
-	 */
 	public void atualizaServico(Servico servico) {
-		servicoDao.updateServicoForId(servico.getStatus(), servico.getTecnico().getMatricula(), servico.getId());
+		servicoDao.updateServicoForId(servico.getStatus(), servico.getId());
 		Evento evento = new Evento();
-		evento.setServico_id(servico.getId());
+		evento.setServicoId(servico.getId());
 		evento.setData(new Date(System.currentTimeMillis()));
 		evento.setDescricao("Atualizacao ");
 		evento.setDetalhes("Mudanca de status " + servico.getStatus());
 		eventoDao.save(evento);
 	}
 
-	/**
-	 * Recupera um servico pelo ID
-	 * 
-	 * @param id
-	 * @return {@link Servico}
-	 */
 	public Servico recuperaServicoId(long id) {
 		return servicoDao.findById(id).get();
 	}
 
-	public List<Servico> recuperarServicosPendentesTecnico(int id) {
-		return servicoDao.findAllByPendenteTecnico(id);
-	}
 }

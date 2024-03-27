@@ -1,16 +1,13 @@
 package org.diego.api.ServiceOrder;
 
-import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.io.IOException;
 
 import org.diego.api.serviceorder.ServiceOrderApplication;
-import org.diego.api.serviceorder.dto.Cliente;
-import org.diego.api.serviceorder.service.ClienteService;
+import org.diego.api.serviceorder.model.Cliente;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,28 +24,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ServiceOrderApplication.class, webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-//@TestPropertySource(locations = "classpath:application-integrationtest.properties")
 @AutoConfigureTestDatabase
 public class ControllerTest {
 
 	@Autowired
-	private ClienteService clienteService;
-	@Autowired
 	private MockMvc mockMvc;
 
 	@Test
-	public void testSalvarCliente() throws Exception {
-		String retorno = mockMvc
-				.perform(post("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(montaCliente())))
+	public void testSalvaRecuperaRemoveCliente() throws Exception {
+		Cliente cliente = montaCliente();
+		mockMvc.perform(post("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(cliente)))
+				.andExpect(status().isOk()).andDo(print());
+		mockMvc.perform(get("/cliente/1").contentType(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(status().isOk()).andReturn().getResponse();
+		cliente.setTelefone("11 9988745");
+		cliente.setId(1);
+		mockMvc.perform(put("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(cliente)))
+				.andExpect(status().isOk()).andDo(print());
+		mockMvc.perform(delete("/cliente/1"))
 				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
-		assertNotNull(retorno);
 	}
 
 	@Test
-	public void testRecuperarCliente() throws Exception {
-		clienteService.saveCliente(montaCliente());
-		mockMvc.perform(get("/cliente/1").contentType(MediaType.APPLICATION_JSON)).andDo(print())
-				.andExpect(status().isOk());
+	public void testRecuperarClienteNaoCadastrado() throws Exception {
+		mockMvc.perform((get("/cliente/1222"))).andDo(print()).andExpect(status().isNoContent());
+	}
+
+	@Test
+	public void testAtualizaClienteNaoCadastrado() throws Exception {
+		mockMvc.perform(put("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(montaCliente())))
+				.andExpect(status().isUnprocessableEntity()).andDo(print());
 	}
 
 	private Cliente montaCliente() {
@@ -59,6 +64,7 @@ public class ControllerTest {
 		cliente.setNome("Jose Mourinho");
 		cliente.setUf("PR");
 		cliente.setTelefone("41 555441122");
+		cliente.setNumDocumento(987456112L);
 		return cliente;
 	}
 
@@ -67,4 +73,5 @@ public class ControllerTest {
 		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		return mapper.writeValueAsBytes(object);
 	}
+
 }

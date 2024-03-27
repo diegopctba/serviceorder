@@ -1,21 +1,22 @@
 #ServiceOrder
 
+#Libs:
+* Spring Boot 2.7.18
+* H2 (para conexão com o banco H2)
+* Lombok 1.8.32 (Utilizado para diminuir as dependencias de getter e setters)
+
 #Pré Requisitos:
 * JDK 11+
 * Maven 3.8+
-* H2 1.4+
+* H2 2.2+
 
-#Pontos de atenção
-* Ao rodar a aplicação fora de uma IDE (Eclipse), deve-se ter as varáveis de ambiente JAVA_HOME e MAVEN_HOME, apontando para as suas respectivas instalações.
 
 #Configuração
-* Caso rode a aplicação à partir do Eclipse, basta importar o projeto tipo maven (Import > Existing Maven Project)
-* Caso contrário, rode o comando 'mvn install' na linha de comando à partir da pasta local.
+* Clonar projeto (git clone https://github.com/diegopctba/serviceorder.git)
 
 #Banco de dados
-1. Após iniciar o banco de dados H2, efetue login na base: jdbc:h2:~/servico
-2. Após o logon, copie o conteúdo do arquivo CRUD.sql.
-3. Cole o conteúdo copiado na caixa de script do H2 e clique em Run.
+1. Realizar download do banco H2 portable (https://github.com/h2database/h2database/releases/download/version-2.2.224/h2-2023-09-17.zip)
+2. Descompactar o arquivo e iniciar o banco rodando o arquivo /bin/h2 (.bat para windows ou .sh para linux)
 
 #Executando
 * Inicie a execução da classe ServiceOrderApplication (Run As > Java Application)

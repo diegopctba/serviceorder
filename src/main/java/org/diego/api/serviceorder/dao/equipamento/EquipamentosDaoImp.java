@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
-import org.diego.api.serviceorder.dto.Equipamento;
+import org.diego.api.serviceorder.model.Equipamento;
 
 public class EquipamentosDaoImp implements EquipamentosDao {
 
