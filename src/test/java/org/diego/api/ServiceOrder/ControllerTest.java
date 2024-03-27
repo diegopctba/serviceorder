@@ -2,8 +2,7 @@ package org.diego.api.ServiceOrder;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.io.IOException;
 
@@ -34,10 +33,15 @@ public class ControllerTest {
 
 	@Test
 	public void testSalvaRecuperaRemoveCliente() throws Exception {
-		mockMvc.perform(post("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(montaCliente())))
-				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
+		Cliente cliente = montaCliente();
+		mockMvc.perform(post("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(cliente)))
+				.andExpect(status().isOk()).andDo(print());
 		mockMvc.perform(get("/cliente/1").contentType(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isOk()).andReturn().getResponse();
+		cliente.setTelefone("11 9988745");
+		cliente.setId(1);
+		mockMvc.perform(put("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(cliente)))
+				.andExpect(status().isOk()).andDo(print());
 		mockMvc.perform(delete("/cliente/1"))
 				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
 	}
