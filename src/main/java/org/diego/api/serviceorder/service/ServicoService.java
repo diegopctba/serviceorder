@@ -22,8 +22,10 @@ public class ServicoService {
 	@Autowired
 	private EventoDao eventoDao;
 
+	@Autowired
 	private ClienteService clienteService;
 
+	@Autowired
 	private EquipamentoService equipamentoService;
 
 	public Servico criarServico(Servico servico) {

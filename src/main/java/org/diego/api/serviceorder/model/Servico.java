@@ -5,13 +5,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "SERVICO")
@@ -30,6 +24,7 @@ public class Servico {
 	private String defeito;
 	private Date entrada;
 	private Date entrega;
-	private char status;
+	private Character status;
+	private String detalhe;
 
 }
