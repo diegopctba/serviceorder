@@ -2,9 +2,12 @@ package org.diego.api.serviceorder.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.diego.api.serviceorder.dao.evento.EventoDao;
 import org.diego.api.serviceorder.dao.servico.ServicoDao;
+import org.diego.api.serviceorder.model.Cliente;
+import org.diego.api.serviceorder.model.Equipamento;
 import org.diego.api.serviceorder.model.Evento;
 import org.diego.api.serviceorder.model.Servico;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +22,16 @@ public class ServicoService {
 	@Autowired
 	private EventoDao eventoDao;
 
-	/**
-	 * Cria um serviço novo
-	 * 
-	 * @param {@link Servico}
-	 * @return id
-	 */
-	public long criarServico(Servico servico) {
+	private ClienteService clienteService;
+
+	private EquipamentoService equipamentoService;
+
+	public Long criarServico(Servico servico) {
+		Optional<Cliente> cliente = clienteService.getCliente(servico.getCliente().getId());
+		Optional<Equipamento> equipamento = equipamentoService.getById(servico.getEquipamento().getId());
+		if (!cliente.isPresent() || !equipamento.isPresent()) {
+			return null;
+		}
 		long id = servicoDao.save(servico).getId();
 		if (id > 0) {
 			Evento evento = new Evento();
@@ -38,13 +44,8 @@ public class ServicoService {
 		return id;
 	}
 
-	/**
-	 * Atualiza status do servico
-	 * 
-	 * @param {@link Servico}
-	 */
 	public void atualizaServico(Servico servico) {
-		servicoDao.updateServicoForId(servico.getStatus(), servico.getTecnico().getMatricula(), servico.getId());
+		servicoDao.updateServicoForId(servico.getStatus(), servico.getId());
 		Evento evento = new Evento();
 		evento.setServicoId(servico.getId());
 		evento.setData(new Date(System.currentTimeMillis()));
@@ -53,17 +54,8 @@ public class ServicoService {
 		eventoDao.save(evento);
 	}
 
-	/**
-	 * Recupera um servico pelo ID
-	 * 
-	 * @param id
-	 * @return {@link Servico}
-	 */
 	public Servico recuperaServicoId(long id) {
 		return servicoDao.findById(id).get();
 	}
 
-	public List<Servico> recuperarServicosPendentesTecnico(int id) {
-		return servicoDao.findAllByPendenteTecnico(id);
-	}
 }

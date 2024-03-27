@@ -27,8 +27,6 @@ public class Servico {
 	private Cliente cliente;
 	@ManyToOne
 	private Equipamento equipamento;
-	@ManyToOne
-	private Tecnico tecnico;
 	private String defeito;
 	private Date entrada;
 	private Date entrega;

@@ -13,10 +13,7 @@ public interface ServicoDao extends JpaRepository<Servico, Long> {
 
 	@Modifying
 	@Transactional
-	@Query("UPDATE Servico s SET s.status = :status, s.tecnico.matricula = :tecnico WHERE s.id = :id")
-	public void updateServicoForId(@Param("status") char status, @Param("tecnico") int tecnico, @Param("id") long id);
-
-	@Query("SELECT s FROM Servico s WHERE s.status = 'P' AND s.tecnico.matricula = :id")
-	public List<Servico> findAllByPendenteTecnico(int id);
+	@Query("UPDATE Servico s SET s.status = :status WHERE s.id = :id")
+	public void updateServicoForId(@Param("status") char status, @Param("id") long id);
 
 }
