@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import org.diego.api.serviceorder.ServiceOrderApplication;
 import org.diego.api.serviceorder.model.Cliente;
+import org.diego.api.serviceorder.model.Equipamento;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ControllerTest {
 	private MockMvc mockMvc;
 
 	@Test
-	public void testSalvaRecuperaRemoveCliente() throws Exception {
+	public void testIntegradoEquipamentoCliente() throws Exception {
 		Cliente cliente = montaCliente();
 		mockMvc.perform(post("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(cliente)))
 				.andExpect(status().isOk()).andDo(print());
@@ -41,6 +42,10 @@ public class ControllerTest {
 		cliente.setId(1);
 		mockMvc.perform(put("/cliente").contentType(MediaType.APPLICATION_JSON).content(toJson(cliente)))
 				.andExpect(status().isOk()).andDo(print());
+		Equipamento equipamento = montaEquipamento();
+		mockMvc.perform(post("/equipamento").contentType(MediaType.APPLICATION_JSON).content(toJson(equipamento)))
+						.andExpect(status().isOk()).andDo(print());
+		mockMvc.perform(delete("/equipamento/1")).andExpect(status().isOk());
 		mockMvc.perform(delete("/cliente/1"))
 				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
 	}
@@ -74,4 +79,15 @@ public class ControllerTest {
 		return mapper.writeValueAsBytes(object);
 	}
 
+	private Equipamento montaEquipamento() {
+		Equipamento equipamento = new Equipamento();
+		equipamento.setCliente(montaCliente());
+		equipamento.getCliente().setId(1);
+		equipamento.setDescricao("Geladeira");
+		equipamento.setModelo("GE665");
+		equipamento.setMarca("Electrolux");
+		equipamento.setDescricao("defeito");
+		equipamento.setSerie("987456321");
+		return equipamento;
+	}
 }
